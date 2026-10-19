@@ -27,8 +27,14 @@ func getEnvInt(key string, fallback int) int {
 }
 
 func main() {
+	// Support Render, Heroku, Cloud Run default $PORT
+	defaultAddr := ":9099"
+	if port := os.Getenv("PORT"); port != "" {
+		defaultAddr = ":" + port
+	}
+
 	var (
-		address      = flag.String("address", getEnv("MOCK_MIDTRANS_ADDRESS", ":9099"), "Address to listen on (e.g. :9099)")
+		address      = flag.String("address", getEnv("MOCK_MIDTRANS_ADDRESS", defaultAddr), "Address to listen on (e.g. :9099 or :$PORT)")
 		webhookURL   = flag.String("webhook-url", getEnv("MOCK_MIDTRANS_WEBHOOK_URL", ""), "Webhook URL of shipment service to send callbacks")
 		serverKey    = flag.String("server-key", getEnv("MIDTRANS_DA_SERVER_KEY", ""), "Midtrans Server Key for calculating SHA-512 signatures")
 		scenario     = flag.String("scenario", getEnv("MOCK_MIDTRANS_SCENARIO", "normal"), "Scenario: normal | timeout-existing | timeout-not-found")

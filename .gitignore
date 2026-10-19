@@ -1,0 +1,21 @@
+# Binaries
+mock-midtrans
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test artifacts
+*.out
+*.test
+
+# Output of the go coverage tool
+*.coverage
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
